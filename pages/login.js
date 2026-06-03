@@ -8,7 +8,7 @@ exports.LoginPage = class LoginPage {
     }
 
     async gotoLoginPage(){
-    await this.page.goto('https://www.saucedemo.com/?utm_source=chatgpt.com');
+    await this.page.goto('https://www.saucedemo.com');
     }
 
     async login(username, password) {
