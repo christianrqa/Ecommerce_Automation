@@ -3,32 +3,54 @@ import { LoginPage } from '../../pages/login';
 import { InventoryPage } from '../../pages/inventory';
 import { CartPage } from '../../pages/cart';
 import { CheckOut } from '../../pages/checkout';
+import { products } from '../../test-data/products';
 
-
-test('User can login and add products to cart', async ({ page }) => {
+test('User can login, manage cart and complete checkout', async ({ page }) => {
 
     const login = new LoginPage(page);
+    const inventory = new InventoryPage(page);
+    const cart = new CartPage(page);
+    const checkout = new CheckOut(page);
+
+    // -------------------------
+    // LOGIN
+    // -------------------------
     await login.gotoLoginPage();
-    await login.login('standard_user','secret_sauce');
+    await login.login('standard_user', 'secret_sauce');
     await expect(page).toHaveURL(/inventory/);
 
-    const inventory = new InventoryPage(page)
-    await inventory.addProduct('sauce-labs-backpack');
-    await inventory.addProduct('sauce-labs-bike-light');
-    await inventory.addProduct('sauce-labs-bolt-t-shirt');
-    await expect(page.locator('.shopping_cart_badge')).toHaveText('3');
-    await inventory.goToCart()
+    // -------------------------
+    // ADD PRODUCTS
+    // -------------------------
+    const productIds = products.map(p => p.id);
+    await inventory.addProducts(productIds);
 
-    const cart = new CartPage(page);
-    await cart.removeProduct();
-    await cart.backToHome();
+    await expect(page.locator('.shopping_cart_badge'))
+        .toHaveText(String(productIds.length));
+
+    // Validate cart items from inventory selection logic
+    const expectedNames = products.map(p => p.name);
     await inventory.goToCart();
+    await cart.validateProducts(expectedNames);
+
+    // -------------------------
+    // REMOVE ITEM
+    // -------------------------
+    await cart.removeProduct('sauce-labs-backpack');
+
+    const expectedAfterRemoval = products
+        .filter(p => p.id !== 'sauce-labs-backpack')
+        .map(p => p.name);
+
+    await cart.validateProducts(expectedAfterRemoval);
+
+    // -------------------------
+    // CHECKOUT FLOW
+    // -------------------------
     await cart.checkOut();
 
-    const checkOut = new CheckOut(page);
-    await checkOut.fillInformation('Tian','ramos','1234');
-    await checkOut.validateProduct(['Sauce Labs Bike Light','Sauce Labs Bolt T-Shirt']);
-    await checkOut.validateTotal('28.06');
-    await checkOut.finishOrder();
+    await checkout.fillInformation('Tian', 'Ramos', '1234');
+    await checkout.validateProduct(expectedAfterRemoval);
+    await checkout.validateTotal('28.06');
+    await checkout.finishOrder();
 });
-

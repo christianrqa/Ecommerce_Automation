@@ -4,24 +4,38 @@ exports.CartPage = class CartPage {
 
     constructor(page) {
         this.page = page;
-
-        // LOCATORS
-        this.removeButton = page.locator('[data-test="remove-sauce-labs-backpack"]'); 
-        this.continueShoppingButton = page.locator('[data-test="continue-shopping"]');
-        this.checkoutButton = page.locator('[data-test="checkout"]');
     }
 
-    async removeProduct() {
-        await this.removeButton.click();
+    // -------------------------
+    // VALIDATE CART ITEMS
+    // -------------------------
+    async validateProducts(expectedNames) {
+        const items = await this.page
+            .locator('.inventory_item_name')
+            .allTextContents();
+
+        expect(items.sort()).toEqual(expectedNames.sort());
     }
 
+    // -------------------------
+    // REMOVE PRODUCT (DYNAMIC)
+    // -------------------------
+    async removeProduct(productId) {
+        await this.page
+            .locator(`[data-test="remove-${productId}"]`)
+            .click();
+    }
+
+    // -------------------------
+    // NAVIGATION
+    // -------------------------
     async backToHome() {
-        await this.continueShoppingButton.click();
+        await this.page.locator('[data-test="continue-shopping"]').click();
         await expect(this.page).toHaveURL(/inventory/);
     }
 
     async checkOut() {
-        await this.checkoutButton.click();
+        await this.page.locator('[data-test="checkout"]').click();
         await expect(this.page).toHaveURL(/checkout/);
     }
 };

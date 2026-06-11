@@ -1,0 +1,14 @@
+exports.products = [
+    {
+        id: 'sauce-labs-backpack',
+        name: 'Sauce Labs Backpack'
+    },
+    {
+        id: 'sauce-labs-bike-light',
+        name: 'Sauce Labs Bike Light'
+    },
+    {
+        id: 'sauce-labs-bolt-t-shirt',
+        name: 'Sauce Labs Bolt T-Shirt'
+    }
+];
