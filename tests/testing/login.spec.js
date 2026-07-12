@@ -1,8 +1,8 @@
 import { test, expect } from '@playwright/test';
-import { LoginPage } from '../../pages/login';
-import { InventoryPage } from '../../pages/inventory';
-import { CartPage } from '../../pages/cart';
-import { CheckOut } from '../../pages/checkout';
+import { LoginPage } from '../../pages/LoginPage';
+import { InventoryPage } from '../../pages/InventoryPage';
+import { CartPage } from '../../pages/CartPage';
+import { CheckOut } from '../../pages/CheckoutPage';
 import { products } from '../../test-data/products';
 
 test('User can login, manage cart and complete checkout', async ({ page }) => {
