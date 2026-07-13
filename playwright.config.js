@@ -24,7 +24,7 @@ export default defineConfig({
   use: {
   baseURL: process.env.BASE_URL || 'https://www.saucedemo.com',
 
-    headless: process.env.HEADLESS === 'true',
+    headless: process.env.CI ? true : process.env.HEADLESS === 'true',
 
     screenshot: 'only-on-failure',
 

@@ -1,8 +1,4 @@
-- name: Run Playwright Tests
-  env:
-    HEADLESS: true
-    BASE_URL: https://www.saucedemo.com
-  run: npx playwright test
+name: Playwright Tests
 
 on:
   push:
@@ -16,7 +12,6 @@ on:
 jobs:
   playwright:
     runs-on: ubuntu-latest
-
     timeout-minutes: 30
 
     steps:
@@ -35,9 +30,13 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Run Playwright Tests
+        env:
+          CI: true
+          HEADLESS: true
+          BASE_URL: https://www.saucedemo.com
         run: npx playwright test
 
-      - name: Upload Playwright Report
+      - name: Upload Playwright HTML Report
         if: always()
         uses: actions/upload-artifact@v4
         with:
