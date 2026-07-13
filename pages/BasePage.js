@@ -1,8 +1,10 @@
-const { expect } = require('@playwright/test');
-
 class BasePage {
     constructor(page) {
         this.page = page;
+    }
+
+    async goto(url) {
+        await this.page.goto(url);
     }
 
     async click(locator) {
@@ -11,6 +13,10 @@ class BasePage {
 
     async fill(locator, text) {
         await locator.fill(text);
+    }
+
+    async getText(locator) {
+        return await locator.textContent();
     }
 
     async waitForVisible(locator) {
@@ -24,4 +30,4 @@ class BasePage {
     }
 }
 
-module.exports = BasePage;
+module.exports = { BasePage };
