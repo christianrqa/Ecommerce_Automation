@@ -1,3 +1,7 @@
+![Playwright](https://img.shields.io/badge/Playwright-Test_Automation-45ba4b)
+![JavaScript](https://img.shields.io/badge/JavaScript-ES6-yellow)
+![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-CI-blue)
+
 # Playwright Ecommerce Automation Framework
 
 A scalable UI automation framework built using Playwright and JavaScript following the Page Object Model (POM) design pattern.
