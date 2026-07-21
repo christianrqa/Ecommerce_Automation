@@ -57,7 +57,7 @@ A scalable UI automation framework built using Playwright and JavaScript followi
 Clone the repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/Ecommerce_Automation.git
+git clone https://github.com/christianrqa/Ecommerce_Automation.git
 ```
 
 Install dependencies
@@ -128,4 +128,5 @@ Artifacts uploaded:
 ## Author
 
 Christian Rjhie Reyes
+
 Associate QA Engineer
